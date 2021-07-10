@@ -3,7 +3,7 @@ require("dotenv").config();
 
 const mongo_url = process.env.MONGODB_URI;
 const ConfigDB = ()=>{
-    mongoose.connect("mongodb://localhost:27017/Laptop",{
+    mongoose.connect(mongo_url,{
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useFindAndModify: false,
