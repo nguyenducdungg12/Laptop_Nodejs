@@ -1,10 +1,27 @@
 const mongoose = require("mongoose");
 const {Schema} = mongoose;
-
+const ProductModel = new Schema({
+    title : {
+        type : String,
+    },
+    oldprice : {
+        type : Number,
+    },
+    newprice : {
+        type : Number,
+    },
+    image : {
+        type : String,
+    },
+    soluong : {
+        type : Number , 
+    },
+    type : {
+        type : String , 
+    },
+})
 const OrderModel = new Schema({
-   products : {
-       type : Array,
-   },
+   products : [ProductModel],
    address : {
        type : String,
    },
