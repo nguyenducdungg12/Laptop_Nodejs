@@ -25,7 +25,7 @@ const OrderModel = new Schema({
    address : {
        type : String,
    },
-   TotalPrice : {
+   totalPrice : {
        type : Number,
    },
    payment : {
