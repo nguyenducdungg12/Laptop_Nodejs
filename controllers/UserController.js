@@ -247,7 +247,6 @@ module.exports = {
         }
     },
     updateUser: async(req,res)=>{
-        console.log(123);
         const { _id } = req.user.data;
         const {phone,sex,ngaysinh,currentPassword,newPassword,name} = req.body;
         const user = await UserModel.findById(_id);
