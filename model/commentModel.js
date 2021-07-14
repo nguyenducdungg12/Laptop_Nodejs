@@ -2,44 +2,24 @@ const mongoose = require("mongoose");
 const {Schema} = mongoose;
 
 const UserModel = new Schema({
-    username : {
-        type : String,
-        require : true,
-        unique : true,
-    },
-    password : {
-        type : String,
-        require :true,
+    _id:{
+        type:Schema.Types.ObjectId
     },
     name : {
-        type : String,
-    },
-    email : {
         type : String,
     },
     image : {
         type : String,
     },
-    role : {
-        type : String,
-    },
-    enable : {
-        type : Boolean,
-    },
-    verificationcode : {
-        type : String,
-    },
-    forgotpassword : {
-        type : String,
-    },
-    ngaysinh : {
-        type : String,
-    },
-    sex : {
-        type : String,
-    }
 })
 
+const reply = new Schema({
+    user : UserModel
+    ,
+    content : {
+        type : String,
+    },
+})
 const commentModel = new Schema({
 
     user : UserModel
@@ -50,8 +30,10 @@ const commentModel = new Schema({
     start : {
         type : Number,
     },
-    reply : {
-        type : Array,
+    reply :[reply],
+    createdBy:{
+        type:Date,
+        default:Date.now
     }
 })
 

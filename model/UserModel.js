@@ -37,6 +37,9 @@ const UserModel = new Schema({
     },
     sex : {
         type : String,
+    },
+    phone:{
+        type: String,
     }
 })
 

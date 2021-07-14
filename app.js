@@ -6,6 +6,7 @@ const cors = require('cors');
 var DB = require("./config/database"); // import file config database
 const ProductRouter = require('./routes/ProductRouter')
 const UserController = require('./routes/UserRouter');
+const OrderRouter = require('./routes/OrderRouter');
 require("dotenv").config();
 //connect database;
 DB.ConfigDB();
@@ -21,6 +22,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors())
 
 app.use("/api",ProductRouter);
+app.use("/api/auth",OrderRouter);
 app.use("/api/auth",UserController);
 
 app.listen(port, () => {
