@@ -4,7 +4,10 @@ const User = require('../model/UserModel');
 
 module.exports = {
     // Get all products
-    getAllProduct: async (req, res) => {
+    getAllProduct : async (req,res)=>{
+        return res.json(await ProductModel.find({}));
+    },
+    getProduct: async (req, res) => {
         let { page, sort, max, min, search } = req.query;
         sort = sort && parseInt(sort); // chuyển String qua int
         page = page ? page : 1; // nếu không có query page thì trả về page 1
@@ -291,5 +294,78 @@ module.exports = {
             commentPerPage: page == 1 ? cmtproduct.comment.length < 10 ? cmtproduct.comment.length : 10 : cmtproduct.comment.length < page * 10 ? cmtproduct.comment.length - (10 * (page - 1)) : 10,
             totalComment: cmtproduct.comment.length
         });
+    },
+    createProduct : async (req,res)=>{
+        const {quantity,newprice,oldprice,type,category,content,title} = req.body;
+        var image,ListImage;
+        if(req.files){
+            if(req.files.image){
+                 image = "http://localhost:8080/image/product/"+req.files.image[0].originalname;
+            }
+            if(req.files.listimage){
+                 ListImage = req.files.listimage.map((item)=>`http://localhost:8080/image/product/${item.originalname}`);
+            }
+        }
+        try{
+            const product = new ProductModel({
+                quantity,
+                newprice,
+                oldprice,
+                type,
+                category,
+                title,
+                content,
+                image,
+                ListImage,
+            })
+            return res.json(await product.save());
+        }
+        catch(err){
+            return res.json(err);
+        }
+    },
+    updateProduct : async (req,res)=>{
+        const {id,category,type,title,newprice,oldprice,quantity} = req.body;
+        var image,ListImage;
+        if(req.files){
+            if(req.files.image){
+                 image = "http://localhost:8080/image/product/"+req.files.image[0].originalname;
+            }
+            if(req.files.listimage){
+                 ListImage = req.files.listimage.map((item)=>`http://localhost:8080/image/product/${item.originalname}`);
+            }
+        }
+        try{
+            const product = await ProductModel.findById(id);
+            product.category = category;
+            product.title = title;
+            product.newprice = newprice;
+            product.oldprice = oldprice;
+            product.type = type;
+            product.quantity = quantity;
+            if(image){
+                product.image=image;
+            }
+            if(ListImage){
+                product.ListImage=ListImage;
+
+            }
+            console.log(12345);
+           return res.json(await product.save());
+        }   
+        catch(err){
+
+        }
+    },
+    deleteProduct : async (req,res)=>{
+        const {id} = req.body;
+        try{
+            await ProductModel.findByIdAndRemove(id);
+            return res.json("Thành công")
+        }
+        catch(err){
+            return res.json(err);
+        }
     }
+
 }

@@ -55,7 +55,6 @@ const ProductModel = new Schema({
     },
     ListImage : {
         type : Array,
-
     },
     category : {
         type : String,
