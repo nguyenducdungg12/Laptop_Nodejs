@@ -250,7 +250,6 @@ module.exports = {
         const { _id } = req.user.data;
         const {phone,sex,ngaysinh,currentPassword,newPassword,name} = req.body;
         const user = await UserModel.findById(_id);
-        console.log(req.file);
         if(req.file){
             user.image="http://localhost:8080/image/"+req.file.originalname;
         }
